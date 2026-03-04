@@ -94,6 +94,7 @@ void WorkerManager::save(){
 }
 
 void WorkerManager::add_worker(){
+	this->Show_Emp();
 	// 要添加多少人————即数组中有多少元素
 	int add_num = 0;
 	std::cout<<"请输入要添加的人数\n";
@@ -251,8 +252,7 @@ void WorkerManager::Show_Emp(){
 	{
 		m_empArray[i]->showInfo();
 	}
-	system("pause");
-	system("cls");
+	std::cout<<std::endl;
 }
 int WorkerManager::emp_Isexist(int id){
 	for (int i = 0; i < m_empNum; i++)
@@ -271,6 +271,7 @@ void WorkerManager::Del_emp(){
 		std::cout<<"员工名单为空,删除失败\n";
 		return;
 	}
+	this->Show_Emp();
 	std::cout<<"请输入要删除的员工的编号\n";
 	int index,id;
 	std::cin>>id;
@@ -278,6 +279,8 @@ void WorkerManager::Del_emp(){
 	if (index == -1)
 	{
 		std::cout<<"输入有误,删除的员工不存在，删除失败\n";
+		system("pause");
+		system("cls");
 		return;
 	}
 	delete m_empArray[index];
@@ -294,6 +297,7 @@ void WorkerManager::Del_emp(){
 	}
 	
 	std::cout<<"删除成功\n";
+	system("pause");
 	system("cls");
 }
 
@@ -303,6 +307,8 @@ void WorkerManager::Mod_emp(){
 		std::cout<<"员工名单为空,修改失败\n";
 		return;
 	}
+
+	this->Show_Emp();
 	int new_id,dselect,id,index;
 	std::string new_name;
 
@@ -328,7 +334,7 @@ void WorkerManager::Mod_emp(){
 	//
 	std::cout<<"请输入修改后的姓名\n";
 	std::cin>>new_name;
-	
+
 	// 添加输入检查，防止编号重复
 	while (1)
 	{
@@ -372,4 +378,68 @@ void WorkerManager::Mod_emp(){
 	m_empArray[index] = worker;
 	// 将修改后的数据保存
 	this->save();
+	system("pause");
+	system("cls");
+}
+
+void WorkerManager::Find_emp(){
+	if (this->m_fileIsEmpty)
+	{
+		std::cout<<"文件为空或不存在\n";
+		return;
+	}
+	int select;
+	bool IsFindSuccess = false;
+	do
+	{
+		std::cout<<"请选择查找方式\n";
+		std::cout<<"1,按姓名查找\n";
+		std::cout<<"2,按编号查找\n";
+		std::cin>>select;
+		if (select == 1)
+			{
+				std::string name;
+				std::cout<<"请输入要查找的姓名\n";
+				std::cin>>name;
+				for (int i = 0; i < m_empNum; i++)
+				{
+					if (m_empArray[i]->m_name == name)
+					{
+						m_empArray[i]->showInfo();
+						IsFindSuccess = true;
+					}
+				}
+				if (IsFindSuccess == false)
+				{
+					std::cout<<"查无此人\n";
+				}
+				
+			}
+			else if (select == 2)
+			{
+				int id;
+				std::cout<<"请输入要查找的编号\n";
+				std::cin>>id;
+				for (int i = 0; i < m_empNum; i++)
+				{
+					if (m_empArray[i]->m_ID == id)
+					{
+						m_empArray[i]->showInfo();
+						IsFindSuccess = true;
+						break;
+					}
+				}		
+				if (IsFindSuccess == false)
+				{
+					std::cout<<"查无此人\n";
+				}
+			}
+			else
+			{
+				std::cout<<"请输入正确的查找方式\n";
+			}
+	} while (select!=1&&select!=2);
+	
+	system("pause");
+	system("cls");
 }

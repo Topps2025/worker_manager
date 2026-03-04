@@ -43,6 +43,8 @@ int main(){
 				break;
 			case 2:
 				wm.Show_Emp();
+				system("pause");
+				system("cls");
 				break;
 			case 3:
 				wm.Del_emp();
@@ -51,6 +53,7 @@ int main(){
 				wm.Mod_emp();
 				break;
 			case 5:
+				wm.Find_emp();
 				break;
 			case 6:
 				break;

@@ -21,6 +21,7 @@ public:
     int emp_Isexist(int id);
     void Del_emp();
     void Mod_emp();
+    void Find_emp();
     ~WorkerManager();
 
     bool m_fileIsEmpty;
