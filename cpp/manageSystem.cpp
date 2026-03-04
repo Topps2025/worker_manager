@@ -46,8 +46,8 @@ WorkerManager::WorkerManager(){
 		}
 		
 		std::cout<<"职工编号："<<m_empArray[i]->m_ID
-		<<" 职工姓名："<<m_empArray[i]->m_name
-		<<" 部门编号："<<m_empArray[i]->m_deptID
+		<<"\t职工姓名："<<m_empArray[i]->m_name
+		<<"\t部门编号："<<m_empArray[i]->m_deptID
 		<<std::endl;
 	}
 	
@@ -131,8 +131,18 @@ void WorkerManager::add_worker(){
 			//该指针暂时置为空，因为我们还不知道 添加的员工 是哪一个 子类
 			std::cout<<"请输入第"<<i+1<<"名员工的姓名\n";
 			std::cin>>name;
-			std::cout<<"请输入第"<<i+1<<"名员工的编号\n";
-			std::cin>>id;
+			// 添加输入检查，防止编号重复
+			while (1)
+			{
+				std::cout<<"请输入第"<<i+1<<"名员工的编号\n";
+				std::cin>>id;
+				if (emp_Isexist(id) != -1)
+				{
+					std::cout<<"该编号的员工已存在,请重新输入\n";
+				}
+				else break;
+			} 
+			
 			int dselect;
 			do
 			{
@@ -198,6 +208,7 @@ int WorkerManager::get_empNum(){
 }
 // 根据File内容初始化职工信息
 void WorkerManager::emp_init(){
+
 	int id,did;
 	std::string name;
 	std::ifstream ifs;
@@ -229,4 +240,54 @@ void WorkerManager::emp_init(){
 	}
 	
 	ifs.close();
+}
+void WorkerManager::Show_Emp(){
+	if (m_fileIsEmpty == true)
+	{
+		std::cout<<"文件为空或不存在\n";
+		return;
+	}
+	for (int i = 0; i < m_empNum; i++)
+	{
+		m_empArray[i]->showInfo();
+	}
+	system("pause");
+	system("cls");
+}
+int WorkerManager::emp_Isexist(int id){
+	for (int i = 0; i < m_empNum; i++)
+	{
+		if (m_empArray[i]->m_ID == id)
+		{
+			return i;
+		}
+	}
+	return -1;
+}
+
+void WorkerManager::Del_emp(){
+	if (m_empNum == 0)
+	{
+		std::cout<<"员工名单为空,删除失败\n";
+		return;
+	}
+	std::cout<<"请输入要删除的员工的编号\n";
+	int index,id;
+	std::cin>>id;
+	index = emp_Isexist(id);
+	if (index == -1)
+	{
+		std::cout<<"输入有误,删除的员工不存在，删除失败\n";
+		return;
+	}
+	delete m_empArray[index];
+	for (int i = index; i < m_empNum - 1; i++)
+	{
+		m_empArray[i] = m_empArray[i+1];
+		// 取缔被删除的元素，后面的元素依次往前排.
+	}
+	m_empNum--;
+	this->save();
+	std::cout<<"删除成功\n";
+	system("cls");
 }

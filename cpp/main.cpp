@@ -31,31 +31,33 @@ int main(){
     WorkerManager wm;
 	int choice = 0;
 	while(true){
-	wm.Show_Menu();
-	std::cin>>choice;
-	switch(choice){
-	case 0:
-		std::cout<<"欢迎下次使用！\n";
-		wm.Exit_system();
-		break;
-	case 1:
-		wm.add_worker();
-		break;
-	case 2:
-		break;
-	case 3:
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	default:
-		system("cls");
-		break;
+		wm.Show_Menu();
+		std::cin>>choice;
+		switch(choice){
+			case 0:
+				std::cout<<"欢迎下次使用！\n";
+				wm.Exit_system();
+				break;
+			case 1:
+				wm.add_worker();
+				break;
+			case 2:
+				wm.Show_Emp();
+				break;
+			case 3:
+				wm.Del_emp();
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			case 7:
+				break;
+			default:
+				system("cls");
+				break;
 		}
 	}
     return 0;

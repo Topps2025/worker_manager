@@ -9,9 +9,9 @@ std::string labor_worker::get_deptName(){
 	return std::string("员工");
 }   
 void labor_worker::showInfo(){
-	std::cout<<"职工编号；"<<this->m_ID
-	<<"\t姓名；"<<this->m_name
-	<<"\t岗位；"<<this->get_deptName()
+	std::cout<<"职工编号:"<<this->m_ID
+	<<"\t姓名:"<<this->m_name
+	<<"\t岗位:"<<this->get_deptName()
 	<<std::endl;
 }
 

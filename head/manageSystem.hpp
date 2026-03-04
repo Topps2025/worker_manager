@@ -17,6 +17,9 @@ public:
     void save();
     int get_empNum();
     void emp_init();
+    void Show_Emp();
+    int emp_Isexist(int id);
+    void Del_emp();
     ~WorkerManager();
 
     bool m_fileIsEmpty;
