@@ -20,6 +20,7 @@ public:
     void Show_Emp();
     int emp_Isexist(int id);
     void Del_emp();
+    void Mod_emp();
     ~WorkerManager();
 
     bool m_fileIsEmpty;

@@ -166,7 +166,7 @@ void WorkerManager::add_worker(){
 					break;
 				
 				default:
-					std::cout<<"输入有错误，请重新输入\n";
+					std::cout<<"工种输入有错误，请重新输入\n";
 					break;
 				}
 			} while (dselect!=1&&dselect!=2&&dselect!=3);
@@ -288,6 +288,88 @@ void WorkerManager::Del_emp(){
 	}
 	m_empNum--;
 	this->save();
+	if (m_empNum == 0)
+	{
+		m_fileIsEmpty = true;
+	}
+	
 	std::cout<<"删除成功\n";
 	system("cls");
+}
+
+void WorkerManager::Mod_emp(){
+	if (m_fileIsEmpty == true)
+	{
+		std::cout<<"员工名单为空,修改失败\n";
+		return;
+	}
+	int new_id,dselect,id,index;
+	std::string new_name;
+
+	// 判断编号是否存在，若存在，找到index下标
+	while (1)
+	{
+		std::cout<<"请输入要修改员工的编号:\n";
+		std::cin>>id;
+		index = this->emp_Isexist(id);
+		if (index == -1)
+		{
+			std::cout<<"该编号不存在,请重新输入\n";
+			continue;// 直到index的下标正常为止
+		}
+		else break;			
+	}
+	std::cout<<"原信息如下:\n";
+	m_empArray[index]->showInfo();
+	
+	// 创建临时指针，以待其副本被存入数组
+	abs_worker * worker = NULL;//暂时置空，因为还不知道修改后的职工指针类型
+
+	//
+	std::cout<<"请输入修改后的姓名\n";
+	std::cin>>new_name;
+	
+	// 添加输入检查，防止编号重复
+	while (1)
+	{
+		std::cout<<"请输入修改后的编号\n";
+		std::cin>>new_id;
+		if (emp_Isexist(new_id) != -1 && new_id != id)// 如果输入的新ID已经存在，且不是与旧ID重复，则重新输入
+		{
+			std::cout<<"该编号的员工已存在,请重新输入\n";
+		}
+		else break;
+	} 
+			
+	do
+	{
+		std::cout<<"请输入修改后的工种\n";
+		std::cout<<"1,工人\n";
+		std::cout<<"2,经理\n";
+		std::cout<<"3,老板\n";
+		std::cin>>dselect;
+		switch (dselect)
+		{
+		case 1:
+			worker = new labor_worker(new_id,1,new_name);
+			break;
+		case 2:
+			worker = new manager_worker(new_id,2,new_name);
+			break;
+		case 3:
+			worker = new boss_worker(new_id,3,new_name);
+			break;
+		default:
+			std::cout<<"工种输入有错误，请重新输入\n";
+			break;
+		}
+	} while (dselect!=1&&dselect!=2&&dselect!=3);
+
+
+	// 先释放原来指针指向的空间
+	delete m_empArray[index];
+	// 替换数组元素，使其为新指针
+	m_empArray[index] = worker;
+	// 将修改后的数据保存
+	this->save();
 }
