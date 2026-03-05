@@ -58,6 +58,7 @@ int main(){
 			case 6:
 				break;
 			case 7:
+				wm.Clean_File();
 				break;
 			default:
 				system("cls");

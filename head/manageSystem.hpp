@@ -22,6 +22,8 @@ public:
     void Del_emp();
     void Mod_emp();
     void Find_emp();
+
+    void Clean_File();
     ~WorkerManager();
 
     bool m_fileIsEmpty;

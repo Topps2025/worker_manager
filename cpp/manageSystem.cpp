@@ -269,6 +269,8 @@ void WorkerManager::Del_emp(){
 	if (m_empNum == 0)
 	{
 		std::cout<<"员工名单为空,删除失败\n";
+		system("pause");
+		system("cls");
 		return;
 	}
 	this->Show_Emp();
@@ -440,6 +442,38 @@ void WorkerManager::Find_emp(){
 			}
 	} while (select!=1&&select!=2);
 	
+	system("pause");
+	system("cls");
+}
+
+void WorkerManager::Clean_File(){
+	int select = 0;
+	std::cout<<"是否清空文件\n";
+	std::cout<<"1:\t是\n";
+	std::cout<<"default:\t否\n";
+	std::cin>>select;
+	if (select == 1)
+	{
+		std::ofstream ofs;
+		ofs.open(FILENAME,std::ios::trunc);
+		ofs.close();
+		// 依次释放员工指针指向的堆区内存
+		for (int i = 0; i < m_empNum; i++)
+		{
+			if (m_empArray[i] != NULL)
+			{
+				delete m_empArray[i];
+			}
+		}
+		// 释放数组指针指向的指针数组
+		delete[] m_empArray;
+		// 更新成员数据
+		m_empArray = NULL;
+		m_empNum = 0;
+		m_fileIsEmpty = true;
+		this->save();
+		std::cout<<"已清空文件\n";
+	}
 	system("pause");
 	system("cls");
 }
