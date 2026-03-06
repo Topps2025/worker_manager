@@ -22,7 +22,7 @@ public:
     void Del_emp();
     void Mod_emp();
     void Find_emp();
-
+    void Sort_emp();
     void Clean_File();
     ~WorkerManager();
 

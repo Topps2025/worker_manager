@@ -477,3 +477,52 @@ void WorkerManager::Clean_File(){
 	system("pause");
 	system("cls");
 }
+
+void WorkerManager::Sort_emp(){
+	std::cout<<"请选择排序方式\n";
+	std::cout<<"1,升序\n";
+	std::cout<<"2,降序\n";
+	std::cout<<"default:取消排序\n";
+	int select,minOrMax;
+	std::cin>>select;
+
+	for (int i = 0; i < m_empNum; i++)
+	{
+		minOrMax = i;
+
+		for (int j = i + 1; j < m_empNum; j++)
+		{
+			if (select == 1)
+			{
+				if (m_empArray[j]->m_ID < m_empArray[minOrMax]->m_ID)
+				{
+					minOrMax = j;
+				}
+			}
+			else if (select == 2)
+			{
+				if (m_empArray[j]->m_ID > m_empArray[minOrMax]->m_ID)
+				{
+					minOrMax = j;
+				}
+			}
+			else{
+				std::cout<<"取消排序\n";
+				system("pause");
+				system("cls");
+				return;
+			}			
+		}
+		if (minOrMax != i)
+		{
+			abs_worker * temp = m_empArray[minOrMax];
+			m_empArray[minOrMax] = m_empArray[i];
+			m_empArray[i] = temp;
+		}
+	}
+	this->save();
+	std::cout<<"排序后结果如下\n";
+	this->Show_Emp();
+	system("pause");
+	system("cls");
+}

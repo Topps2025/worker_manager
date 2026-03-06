@@ -56,6 +56,7 @@ int main(){
 				wm.Find_emp();
 				break;
 			case 6:
+				wm.Sort_emp();
 				break;
 			case 7:
 				wm.Clean_File();
